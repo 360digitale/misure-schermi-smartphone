@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Larghezza e altezza dello schermo e misure della scocca degli smartphone dal 2020, con codici modello e gruppi di telefoni con le stesse misure.">
+<title>Misure Schermi Smartphone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: tavola tecnica — barra filtri in alto, poi schede-gruppo con il disegno in scala dello schermo e l'elenco dei modelli */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --line:#d5dbe2; --ink:#16202b; --muted:#5b6876;
+  --accent:#1f5fbf; --accent-soft:#e3ecfa; --mark:#f2b705; --mark-soft:#fff3c4;
+  --ok:#1d7a4f; --off:#7a828c; --soon:#9a5b00;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#161d25; --line:#2a3441; --ink:#e6ebf1; --muted:#97a3b2;
+  --accent:#6fa4ff; --accent-soft:#1b2a40; --mark:#f2c94c; --mark-soft:#3a3214;
+  --ok:#5cc792; --off:#8a939e; --soon:#e0a54a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#161d25; --line:#2a3441; --ink:#e6ebf1; --muted:#97a3b2;
+  --accent:#6fa4ff; --accent-soft:#1b2a40; --mark:#f2c94c; --mark-soft:#3a3214;
+  --ok:#5cc792; --off:#8a939e; --soon:#e0a54a; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header h1{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4.4vw,38px);letter-spacing:-.01em;margin:0;text-wrap:balance}
+header p{margin:6px 0 0;color:var(--muted);max-width:68ch}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:12px;align-items:end}
+@media (max-width:860px){.filters{grid-template-columns:1fr 1fr}.filters .search{grid-column:1/-1}}
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);min-width:0}
+input,select,button{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:8px 10px;min-width:0;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{border:0;border-radius:0;background:var(--bg);color:var(--muted);font-weight:500;cursor:pointer;padding:8px 6px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.calc{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.calc label{flex:1 1 120px}
+.calc .out{flex:2 1 260px;font-size:15px;color:var(--ink);padding-bottom:8px}
+.calc .out b{font-family:var(--f-mono);font-weight:500}
+.calc h2,.summary h2{font-family:var(--f-display);font-size:16px;font-weight:700;margin:0 0 10px;letter-spacing:.01em}
+.summary{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:baseline;color:var(--muted)}
+.summary strong{color:var(--ink)}
+.groups{display:flex;flex-direction:column;gap:14px}
+.group{background:var(--surface);border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:150px 1fr;overflow:hidden}
+.group.hit{border-color:var(--mark)}
+@media (max-width:640px){.group{grid-template-columns:1fr}}
+.spec{padding:16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;align-items:flex-start;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/10px 10px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/10px 10px;background-color:var(--surface)}
+.spec{background-blend-mode:normal}
+@media (max-width:640px){.spec{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center}}
+.spec svg{display:block;max-width:100%}
+.dims{font-family:var(--f-mono);font-size:20px;font-weight:500;line-height:1.15;background:var(--surface);padding:2px 4px;border-radius:4px}
+.dims small{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.list{padding:12px 16px;min-width:0}
+.list h3{margin:0 0 6px;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
+table{width:100%;border-collapse:collapse;font-size:14px}
+.tw{overflow-x:auto}
+td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.m{white-space:normal;min-width:180px;font-weight:500}
+td.r,th.r{text-align:right}
+tr:last-child td{border-bottom:0}
+tr.match td{background:var(--mark-soft)}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--accent-soft)}
+tr.row.match:hover td{background:var(--mark-soft)}
+tr.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.codes{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400;margin-top:1px}
+.chev{display:inline-block;width:1em;color:var(--muted);transition:transform .15s}
+tr.row[aria-expanded="true"] .chev{transform:rotate(90deg)}
+tr.det td{background:var(--bg);white-space:normal;padding:10px 12px 12px 26px}
+.detgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 18px}
+.detgrid div{display:flex;flex-direction:column;min-width:0}
+.detgrid span{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.detgrid b{font-family:var(--f-mono);font-weight:500;font-size:13px;overflow-wrap:anywhere}
+.detgrid .wide{grid-column:1/-1}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;border:1px solid currentColor;margin-left:6px;vertical-align:1px;letter-spacing:.02em}
+.st-Disponibile{color:var(--ok)} .st-Fuori{color:var(--off)} .st-In{color:var(--soon)}
+.fold{color:var(--accent)}
+.more{margin-top:8px;width:auto;background:transparent;color:var(--accent);border:1px solid var(--line);cursor:pointer;font-weight:500}
+.loadmore{align-self:center;width:auto;padding:10px 22px;cursor:pointer;background:var(--accent);color:#fff;border:0;font-weight:600}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+footer{color:var(--muted);font-size:13px;max-width:80ch}
+footer a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.group{transition:border-color .2s}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Misure Schermi Smartphone</h1>
+    <p>Larghezza e altezza dell'area visibile, calcolate da diagonale e risoluzione per gli smartphone annunciati dal 2020. I modelli con le stesse misure sono raggruppati insieme: cerca il tuo per nome o codice e vedi quali altri hanno lo stesso schermo o la stessa scocca. Tocca un modello per vedere anno, risoluzione e tutti i codici.</p>
+  </header>
+
+  <section class="panel">
+    <div class="filters">
+      <label class="search">Cerca modello
+        <input id="q" type="search" placeholder="Nome o codice, es. Galaxy A55, SM-A556B, iPhone 15" autocomplete="off">
+      </label>
+      <label>Marca<select id="brand"></select></label>
+      <label>Anno dal<select id="year"></select></label>
+      <label>Raggruppa per
+        <div class="seg" role="group" aria-label="Raggruppa per">
+          <button type="button" id="mScreen" aria-pressed="true">Schermo</button>
+          <button type="button" id="mBody" aria-pressed="false">Scocca</button>
+        </div>
+      </label>
+      <label>Tolleranza<select id="tol">
+        <option value="0.1">Identiche (0,1 mm)</option>
+        <option value="1" selected>± 0,5 mm</option>
+        <option value="2">± 1 mm</option>
+      </select></label>
+    </div>
+  </section>
+
+  <section class="panel calc" aria-labelledby="calcTitle">
+    <div style="flex-basis:100%"><h2 id="calcTitle">Calcolo rapido</h2></div>
+    <label>Pollici<input id="cIn" type="number" step="0.01" min="1" value="6.4" inputmode="decimal"></label>
+    <label>Pixel lato corto<input id="cW" type="number" min="1" value="1080" inputmode="numeric"></label>
+    <label>Pixel lato lungo<input id="cH" type="number" min="1" value="2400" inputmode="numeric"></label>
+    <div class="out" id="cOut" aria-live="polite"></div>
+  </section>
+
+  <div class="summary"><h2 style="margin:0;color:var(--ink)" id="sumTitle"></h2><span id="sumText"></span></div>
+  <div class="groups" id="groups"></div>
+  <button type="button" class="loadmore" id="loadMore" hidden>Mostra altri gruppi</button>
+
+  <footer>
+    <p>Fonte dati: specifiche GSMArena raccolte nel dataset pubblico <a href="https://github.com/bytecharts/device_specs_gsmarena" target="_blank" rel="noopener">bytecharts/device_specs_gsmarena</a> (ultimo aggiornamento della fonte: __SOURCE_DATE__). Marche presenti: __BRANDS__. Alcune marche possono essere incomplete.</p>
+    <p>Le misure dello schermo sono quelle dell'area attiva, calcolate assumendo pixel quadrati; angoli arrotondati e foro della fotocamera non sono sottratti. Le misure della scocca sono quelle dichiarate (altezza × larghezza × spessore); per i pieghevoli è indicata la scocca da chiusi.</p>
+    <p>Pagina rigenerata il __UPDATED__.</p>
+  </footer>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+  const ROWS = JSON.parse(document.getElementById('data').textContent);
+  const $ = id => document.getElementById(id);
+  const state = {q:'', brand:'', year:2020, mode:'screen', tol:1, shown:25, open:new Set(), det:new Set()};
+  const fmt = (n,d=1) => n.toLocaleString('it-IT',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9+]+/g,' ').trim();
+  const compact = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'');
+  ROWS.forEach((r,i) => { r.id = i; r.c = r.c || []; r.n = norm(r.m + ' ' + r.c.join(' ')); r.cc = ' ' + r.c.map(compact).join(' '); });
+
+  // filtri
+  const brands = [...new Set(ROWS.map(r=>r.b))].sort((a,b)=>a.localeCompare(b));
+  $('brand').innerHTML = '<option value="">Tutte</option>' + brands.map(b=>`<option>${esc(b)}</option>`).join('');
+  const years = [...new Set(ROWS.map(r=>r.y))].sort();
+  $('year').innerHTML = years.map(y=>`<option value="${y}">${y}</option>`).join('');
+
+  try { const s = JSON.parse(localStorage.getItem('msm-prefs')||'{}');
+    if (s.mode) state.mode = s.mode; if (s.tol) state.tol = s.tol; } catch(e){}
+  $('tol').value = String(state.tol);
+
+  function save(){ try{ localStorage.setItem('msm-prefs', JSON.stringify({mode:state.mode,tol:state.tol})); }catch(e){} }
+
+  function keyOf(r){
+    const st = state.tol, q = v => Math.round(v/st)*st;
+    if (state.mode==='screen') return q(r.w).toFixed(1)+'x'+q(r.h).toFixed(1);
+    if (!r.body) return null;
+    return q(r.body[0]).toFixed(1)+'x'+q(r.body[1]).toFixed(1)+'x'+q(r.body[2]).toFixed(1);
+  }
+
+  function rectSvg(w,h,isBody){
+    // disegno in scala: 0,6 px per mm
+    const k = 0.6, W = w*k, H = h*k, pad = 1;
+    const rx = isBody ? 6 : 4;
+    return `<svg width="${(W+pad*2).toFixed(0)}" height="${(H+pad*2).toFixed(0)}" viewBox="0 0 ${W+pad*2} ${H+pad*2}" aria-hidden="true">
+      <rect x="${pad}" y="${pad}" width="${W}" height="${H}" rx="${rx}" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+      ${isBody?`<rect x="${pad+W*0.06}" y="${pad+H*0.04}" width="${W*0.88}" height="${H*0.92}" rx="${rx-2}" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>`:''}
+    </svg>`;
+  }
+
+  function render(){
+    const q = norm(state.q);
+    const terms = q ? q.split(' ') : [];
+    const qc = compact(state.q);
+    const isMatch = r => terms.length && (terms.every(t => r.n.includes(t)) || (qc.length>=4 && r.cc.includes(qc)));
+    let pool = ROWS.filter(r => r.y >= state.year && (!state.brand || r.b===state.brand));
+    if (state.mode==='body') pool = pool.filter(r => r.k!=='Esterno' && r.body);
+
+    const map = new Map();
+    for (const r of pool){ const k = keyOf(r); if(!k) continue; if(!map.has(k)) map.set(k,[]); map.get(k).push(r); }
+    let groups = [...map.entries()].map(([k,items])=>{
+      const avg = f => items.reduce((s,r)=>s+f(r),0)/items.length;
+      const g = {k, items, hits: items.filter(isMatch).length};
+      if (state.mode==='screen'){ g.w=avg(r=>r.w); g.h=avg(r=>r.h); g.wMin=Math.min(...items.map(r=>r.w)); g.wMax=Math.max(...items.map(r=>r.w)); g.hMin=Math.min(...items.map(r=>r.h)); g.hMax=Math.max(...items.map(r=>r.h)); }
+      else { g.w=avg(r=>r.body[1]); g.h=avg(r=>r.body[0]); g.t=avg(r=>r.body[2]); }
+      g.items.sort((a,b)=> (isMatch(b)-isMatch(a)) || b.sd-a.sd || a.m.localeCompare(b.m));
+      return g;
+    });
+    if (terms.length) groups = groups.filter(g=>g.hits>0);
+    groups.sort((a,b)=> (b.hits-a.hits) || (b.items.length-a.items.length) || (a.h-b.h));
+
+    const nModels = new Set(pool.map(r=>r.m)).size;
+    const multi = groups.filter(g=>g.items.length>1).length;
+    $('sumTitle').textContent = terms.length
+      ? (groups.length ? `${groups.length} ${groups.length===1?'gruppo contiene':'gruppi contengono'} “${state.q.trim()}”` : `Nessun modello trovato per “${state.q.trim()}”`)
+      : `${groups.length} gruppi di ${state.mode==='screen'?'schermi':'scocche'}`;
+    $('sumText').innerHTML = `<span class="num">${nModels}</span> modelli dal ${state.year} · <span class="num">${multi}</span> gruppi con più di un modello`;
+
+    const box = $('groups');
+    if (!groups.length){
+      box.innerHTML = `<div class="panel empty">Prova un nome più corto (per esempio solo “A55” o “Note 13”) oppure togli il filtro marca.</div>`;
+      $('loadMore').hidden = true; return;
+    }
+    const slice = groups.slice(0, state.shown);
+    box.innerHTML = slice.map(g => groupHtml(g, isMatch)).join('');
+    $('loadMore').hidden = groups.length <= state.shown;
+    $('loadMore').textContent = `Mostra altri gruppi (${groups.length - state.shown} rimanenti)`;
+  }
+
+  function groupHtml(g, isMatch){
+    const screen = state.mode==='screen';
+    const LIMIT = 10, open = state.open.has(g.k) || g.items.length <= LIMIT + 2;
+    const items = open ? g.items : g.items.slice(0, LIMIT);
+    let dims;
+    if (screen){
+      const range = (g.wMax-g.wMin>=0.05 || g.hMax-g.hMin>=0.05)
+        ? `<small>da ${fmt(g.wMin)}×${fmt(g.hMin)} a ${fmt(g.wMax)}×${fmt(g.hMax)} mm</small>` : '';
+      dims = `<div class="dims">${fmt(g.w/10,2)} × ${fmt(g.h/10,2)} cm<small>${fmt(g.w)} × ${fmt(g.h)} mm</small>${range}</div>`;
+    } else {
+      dims = `<div class="dims">${fmt(g.h)} × ${fmt(g.w)} mm<small>spessore ${fmt(g.t)} mm</small></div>`;
+    }
+    const rows = items.map(r=>{
+      const stc = 'st-'+r.st.split(' ')[0];
+      const fold = r.f ? `<span class="tag fold">${r.k==='Esterno'?'pieghevole · esterno':'pieghevole'}</span>` : '';
+      const codes = r.c.length ? `<span class="codes">${esc(r.c.slice(0,3).join(', '))}${r.c.length>3?` +${r.c.length-3}`:''}</span>` : '';
+      const extra = screen
+        ? `<td class="r num">${fmt(r.di,2)}″</td><td class="r num">${fmt(r.w)}×${fmt(r.h)}</td>`
+        : `<td class="r num">${fmt(r.body[0])}×${fmt(r.body[1])}×${fmt(r.body[2])}</td><td class="r num">${fmt(r.di,2)}″</td>`;
+      const openDet = state.det.has(r.id);
+      const main = `<tr class="row ${isMatch(r)?'match':''}" data-row="${r.id}" tabindex="0" aria-expanded="${openDet}"><td class="m"><span class="chev" aria-hidden="true">›</span>${esc(r.m)}${fold}${codes}</td>${extra}<td><span class="tag ${stc}" style="margin-left:0">${esc(r.st)}</span></td></tr>`;
+      if (!openDet) return main;
+      const bodyTxt = r.body ? `${fmt(r.body[0])} × ${fmt(r.body[1])} × ${fmt(r.body[2])} mm` : 'n.d.';
+      return main + `<tr class="det"><td colspan="${screen?4:4}"><div class="detgrid">
+        <div><span>Anno</span><b>${r.y}</b></div>
+        <div><span>Annunciato</span><b>${esc(fmtDate(r.ann))}</b></div>
+        <div><span>Risoluzione</span><b>${r.rw} × ${r.rh} px</b></div>
+        <div><span>Densità</span><b>${r.ppi} PPI</b></div>
+        <div><span>Schermo</span><b>${fmt(r.w/10,2)} × ${fmt(r.h/10,2)} cm</b></div>
+        <div><span>Scocca${r.f?' (chiuso)':''}</span><b>${bodyTxt}</b></div>
+        <div class="wide"><span>Codici modello</span><b>${r.c.length?esc(r.c.join(', ')):'non disponibili'}</b></div>
+      </div></td></tr>`;
+    }).join('');
+    const head = screen
+      ? `<th>Modello e codici</th><th class="r">Diag.</th><th class="r">Schermo mm</th><th>Stato</th>`
+      : `<th>Modello e codici</th><th class="r">Scocca mm</th><th class="r">Schermo</th><th>Stato</th>`;
+    const more = open ? '' : `<button type="button" class="more" data-open="${esc(g.k)}">Mostra tutti i ${g.items.length} modelli</button>`;
+    return `<article class="group ${g.hits?'hit':''}">
+      <div class="spec">${rectSvg(g.w, g.h, !screen)}${dims}</div>
+      <div class="list"><h3><span class="num">${g.items.length}</span> ${g.items.length===1?'modello':'modelli'}</h3>
+        <div class="tw"><table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>${more}</div>
+    </article>`;
+  }
+
+  const MESI = {January:'gennaio',February:'febbraio',March:'marzo',April:'aprile',May:'maggio',June:'giugno',July:'luglio',August:'agosto',September:'settembre',October:'ottobre',November:'novembre',December:'dicembre'};
+  function fmtDate(a){ const m = /^(\d{4})(?:, (\w+))?(?: (\d+))?/.exec(a||''); if(!m) return a||'n.d.';
+    return [m[3]?String(+m[3]):'', m[2]?(MESI[m[2]]||m[2]):'', m[1]].filter(Boolean).join(' '); }
+
+  // calcolo rapido
+  function calc(){
+    const d = parseFloat($('cIn').value), a = parseInt($('cW').value), b = parseInt($('cH').value);
+    if (!(d>0 && a>0 && b>0)){ $('cOut').textContent = 'Inserisci pollici e risoluzione.'; return; }
+    const w = Math.min(a,b), h = Math.max(a,b), px = Math.hypot(w,h);
+    const wmm = d*w/px*25.4, hmm = d*h/px*25.4;
+    const same = ROWS.filter(r => Math.abs(r.w-wmm)<=0.5 && Math.abs(r.h-hmm)<=0.5).length;
+    $('cOut').innerHTML = `Larghezza <b>${fmt(wmm/10,2)} cm</b> · Altezza <b>${fmt(hmm/10,2)} cm</b> · <b>${Math.round(px/d)}</b> PPI` +
+      (same ? ` · <span style="color:var(--muted)">${same} schermi in elenco entro ±0,5 mm</span>` : '');
+  }
+
+  // eventi
+  let t; $('q').addEventListener('input', e => { clearTimeout(t); t = setTimeout(()=>{ state.q=e.target.value; state.shown=25; render(); }, 150); });
+  $('brand').addEventListener('change', e => { state.brand=e.target.value; state.shown=25; render(); });
+  $('year').addEventListener('change', e => { state.year=+e.target.value; state.shown=25; render(); });
+  $('tol').addEventListener('change', e => { state.tol=+e.target.value; state.shown=25; save(); render(); });
+  function setMode(m){ state.mode=m; $('mScreen').setAttribute('aria-pressed', m==='screen'); $('mBody').setAttribute('aria-pressed', m==='body'); state.shown=25; save(); render(); }
+  $('mScreen').addEventListener('click', ()=>setMode('screen'));
+  $('mBody').addEventListener('click', ()=>setMode('body'));
+  $('loadMore').addEventListener('click', ()=>{ state.shown += 25; render(); });
+  function toggleRow(tr){ const id = +tr.dataset.row; state.det.has(id) ? state.det.delete(id) : state.det.add(id); render();
+    const again = document.querySelector(`tr[data-row="${id}"]`); if (again) again.focus({preventScroll:true}); }
+  $('groups').addEventListener('click', e => {
+    const b = e.target.closest('[data-open]'); if (b){ state.open.add(b.dataset.open); render(); return; }
+    const tr = e.target.closest('tr.row'); if (tr && !window.getSelection().toString()) toggleRow(tr);
+  });
+  $('groups').addEventListener('keydown', e => { const tr = e.target.closest('tr.row'); if (tr && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); toggleRow(tr); } });
+  ['cIn','cW','cH'].forEach(id => $(id).addEventListener('input', calc));
+
+  setMode(state.mode); calc();
+})();
+</script>
+
+</body>
+</html>
